@@ -1,6 +1,6 @@
 Name: strptime
 Category: System, Data, Parsing
-Version: 0.1.7
+Version: 0.1.8
 Cabal-version: >= 1.2
 Build-type: Simple
 Copyright: Eugene Kirpichov
@@ -17,8 +17,8 @@ Cabal-Version: >= 1.6
 Extra-Source-Files: include/hstrptime.h
 
 Source-repository head
-  type: darcs
-  location: http://patch-tag.com/r/jkff/strptime
+  type: git
+  location: git://github.com/jkff/strptime.git
 
 Flag split-base
 
