@@ -1,6 +1,6 @@
 Name: strptime
 Category: System, Data, Parsing
-Version: 0.1.8
+Version: 1.0.0
 Cabal-version: >= 1.2
 Build-type: Simple
 Copyright: Eugene Kirpichov
@@ -8,11 +8,15 @@ Maintainer: ekirpichov@gmail.com
 Author: Eugene Kirpichov
 License: BSD3
 License-File: LICENSE
-Synopsis: Efficient parsing of LocalTime using a binding to C's strptime
+Synopsis: 
+  Efficient parsing of LocalTime using a binding to C's strptime, 
+  with some extra features (i.e. fractional seconds)
 Description:
   This library provides a binding to strptime, that allows to parse 
   dates and times from strings and strict/lazy bytestrings. The library
-  creates LocalTime values.
+  creates LocalTime values. It provides some extra features which 
+  the original strptime lacks - parsing of fractional seconds and parsing
+  of ten-powers of seconds since epoch (for example milliseconds since epoch).
 Cabal-Version: >= 1.6
 Extra-Source-Files: include/hstrptime.h
 

@@ -1,14 +1,14 @@
 {-# LANGUAGE ForeignFunctionInterface, FlexibleInstances #-}
 ------------------------------------------------------------
 -- |
--- Copyright    :   (c) 2009 Eugene Kirpichov
+-- Copyright    :   (c) 2009,2010 Eugene Kirpichov
 -- License      :   BSD-style
 --
 -- Maintainer   :   ekirpichov@gmail.com
 -- Stability    :   experimental
 -- Portability  :   portable (H98 + FFI)
 --
--- strptime wrapper
+-- A binding to strptime with extra features - see below.
 --
 ------------------------------------------------------------
 
