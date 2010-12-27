@@ -1,0 +1,11 @@
+haskell-strptime (1.0.0) maverick; urgency=low
+
+  * Bump to 1.0.0 after some field testing
+
+ -- Eugene Kirpichov <ekirpichov@gmail.com>  Mon, 27 Dec 2010 16:57:02 +0300
+
+haskell-strptime (0.1.8-1) unstable; urgency=low
+
+  * Initial release. (Closes: #607821)
+
+ -- Eugene Kirpichov <ekirpichov@gmail.com>  Tue, 21 Dec 2010 21:48:03 +0300

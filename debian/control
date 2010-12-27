@@ -1,0 +1,57 @@
+Source: haskell-strptime
+Section: haskell
+Priority: extra
+Maintainer: Debian Haskell Group <pkg-haskell-maintainers@lists.alioth.debian.org>
+Uploaders: Eugene Kirpichov <ekirpichov@gmail.com>
+Build-Depends: debhelper (>= 7)
+  , cdbs
+  , haskell-devscripts (>= 0.7)
+  , ghc6
+  , ghc6-prof
+Build-Depends-Indep: ghc6-doc
+Standards-Version: 3.9.1
+Homepage: http://hackage.haskell.org/package/strptime
+
+Package: libghc6-strptime-dev
+Architecture: any
+Depends: ${haskell:Depends}
+  , ${shlibs:Depends}
+  , ${misc:Depends}
+Suggests: ${haskell:Suggests}
+Provides: ${haskell:Provides}
+Recommends: ${haskell:Recommends}
+Description: Haskell binding for strptime with some extra features.
+ strptime is for parsing time according to a format string, see 
+ man strptime(3) http://linux.die.net/man/3/strptime .
+ This version also supports some features the regular strptime doesn't:
+ %OS for fractional seconds and %^[+-]Ns for seconds since epoch,
+ for example %^-3s is milliseconds since epoch.
+
+Package: libghc6-strptime-prof
+Architecture: any
+Depends: ${haskell:Depends}
+  , ${shlibs:Depends}
+  , ${misc:Depends}
+Suggests: ${haskell:Suggests}
+Provides: ${haskell:Provides}
+Recommends: ${haskell:Recommends}
+Description: Haskell binding for strptime with some extra features - profiled.
+ strptime is for parsing time according to a format string, see 
+ man strptime(3) http://linux.die.net/man/3/strptime .
+ This version also supports some features the regular strptime doesn't:
+ %OS for fractional seconds and %^[+-]Ns for seconds since epoch,
+ for example %^-3s is milliseconds since epoch.
+
+Package: libghc6-strptime-doc
+Architecture: all
+Section: doc
+Depends: ${haskell:Depends}
+  , ${misc:Depends}
+Recommends: ${haskell:Recommends}
+Suggests: ${haskell:Suggests}
+Description: Haskell binding for strptime with some extra features - docs.
+ strptime is for parsing time according to a format string, see 
+ man strptime(3) http://linux.die.net/man/3/strptime .
+ This version also supports some features the regular strptime doesn't:
+ %OS for fractional seconds and %^[+-]Ns for seconds since epoch,
+ for example %^-3s is milliseconds since epoch.
