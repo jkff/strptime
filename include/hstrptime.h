@@ -46,6 +46,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #ifdef HAVE_STRINGS_H
 #include <strings.h>  /* for strncasecmp */
