@@ -1321,6 +1321,9 @@ hstrptime (const char *buf, const char *format, struct tm *tm,
             double *psecs, int *poffset)
 {
     enum locale_status decided;
+
+    memset(tm, 0, sizeof(struct tm));
+
     decided = raw;
 #if defined(HAVE_WCSTOD)
     if(mbcslocale) {
