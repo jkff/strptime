@@ -1,6 +1,6 @@
 Name: strptime
 Category: System, Data, Parsing
-Version: 1.0.2
+Version: 1.0.3
 Cabal-version: >= 1.2
 Build-type: Simple
 Copyright: Eugene Kirpichov
@@ -29,6 +29,7 @@ Flag split-base
 Library
   Build-Depends: time, bytestring
   C-sources: cbits/hstrptime.c
+  GHC-Options: -O2
   Include-dirs: include
 
   if flag(split-base)

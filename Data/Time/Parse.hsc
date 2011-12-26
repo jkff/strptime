@@ -95,7 +95,7 @@ instance Strptime_ S.ByteString where
               year  <-  (#peek struct tm,tm_year ) p_tm :: IO CInt
               fsecs <-  peek p_fsecs
               let day = fromGregorian (fromIntegral (year+1900)) (1+fromIntegral month) (fromIntegral mday)
-              let tod = TimeOfDay (fromIntegral hour) (fromIntegral min) (fromIntegral (sec*1000000 + round (fsecs*1000000)) / fromIntegral 1000000)
+              let tod = TimeOfDay (fromIntegral hour) (fromIntegral min) (fromIntegral (round ((fromIntegral sec + fsecs)*1000000)) / fromIntegral 1000000)
               
               touchForeignPtr fztf
               
