@@ -66,10 +66,10 @@ class Strptime_ a where
     strptime_ :: a -> a -> Maybe (LocalTime, Int)
 
 instance Strptime_ [Char] where
-    strptime_ f s = strptime_ (S.pack f) (S.pack s)
+    strptime_ f = let pf = S.pack f in \s -> strptime_ pf (S.pack s)
 
 instance Strptime_ L.ByteString where
-    strptime_ f s = strptime_ (S.concat . L.toChunks $ f) (S.concat . L.toChunks $ s)
+    strptime_ f = let pf = S.concat (L.toChunks f) in \s -> strptime_ pf (S.concat . L.toChunks $ s)
 
 instance Strptime_ S.ByteString where
     strptime_ f = U.unsafePerformIO $ do
