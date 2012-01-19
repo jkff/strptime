@@ -20,7 +20,6 @@ import Foreign
 import Foreign.C.Types
 import Foreign.C.String
 import Foreign.ForeignPtr
-import Foreign.ForeignPtr.Unsafe as U
 import Foreign.Marshal.Alloc
 import GHC.Ptr
 import qualified System.IO.Unsafe as U
@@ -76,7 +75,7 @@ instance Strptime_ S.ByteString where
       -- Avoid memcpy-ing the format string every time.
       let (pf, ofs, len) = BI.toForeignPtr f
       ztf <- mallocBytes (len+1)
-      copyBytes ztf (U.unsafeForeignPtrToPtr pf) len
+      copyBytes ztf (unsafeForeignPtrToPtr pf) len
       pokeByteOff ztf len (0::Word8)
       fztf <- newForeignPtr_ ztf
       addForeignPtrFinalizer finalizerFree fztf

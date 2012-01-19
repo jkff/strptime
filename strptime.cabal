@@ -1,6 +1,6 @@
 Name: strptime
 Category: System, Data, Parsing
-Version: 1.0.5
+Version: 1.0.6
 Cabal-version: >= 1.2
 Build-type: Simple
 Copyright: Eugene Kirpichov
