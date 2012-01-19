@@ -1,4 +1,4 @@
-{-# LANGUAGE ForeignFunctionInterface, FlexibleInstances #-}
+{-# LANGUAGE ForeignFunctionInterface, FlexibleInstances, BangPatterns #-}
 ------------------------------------------------------------
 -- |
 -- Copyright    :   (c) 2009,2010 Eugene Kirpichov
@@ -20,8 +20,11 @@ import Foreign
 import Foreign.C.Types
 import Foreign.C.String
 import Foreign.ForeignPtr
+import Foreign.ForeignPtr.Unsafe as U
 import Foreign.Marshal.Alloc
 import GHC.Ptr
+import qualified System.IO.Unsafe as U
+import Unsafe.Coerce
 
 import Data.Time
 
@@ -69,16 +72,16 @@ instance Strptime_ L.ByteString where
     strptime_ f s = strptime_ (S.concat . L.toChunks $ f) (S.concat . L.toChunks $ s)
 
 instance Strptime_ S.ByteString where
-    strptime_ f = unsafePerformIO $ do
+    strptime_ f = U.unsafePerformIO $ do
       -- Avoid memcpy-ing the format string every time.
       let (pf, ofs, len) = BI.toForeignPtr f
       ztf <- mallocBytes (len+1)
-      copyBytes ztf (unsafeForeignPtrToPtr pf) len
+      copyBytes ztf (U.unsafeForeignPtrToPtr pf) len
       pokeByteOff ztf len (0::Word8)
       fztf <- newForeignPtr_ ztf
       addForeignPtrFinalizer finalizerFree fztf
 
-      return $ \s -> unsafePerformIO $ S.useAsCString s $ \cs -> do
+      return $ \s -> U.unsafePerformIO $ S.useAsCString s $ \cs -> do
         allocaBytes (#const sizeof(struct tm)) $ \p_tm -> do
         alloca $ \p_fsecs -> do
         poke p_fsecs 0
@@ -94,8 +97,10 @@ instance Strptime_ S.ByteString where
               month <-  (#peek struct tm,tm_mon  ) p_tm :: IO CInt
               year  <-  (#peek struct tm,tm_year ) p_tm :: IO CInt
               fsecs <-  peek p_fsecs
-              let day = fromGregorian (fromIntegral (year+1900)) (1+fromIntegral month) (fromIntegral mday)
-              let tod = TimeOfDay (fromIntegral hour) (fromIntegral min) (fromIntegral (round ((fromIntegral sec + fsecs)*1000000)) / fromIntegral 1000000)
+              let !day = fromGregorian (fromIntegral (year+1900)) (1+fromIntegral month) (fromIntegral mday)
+              let !pico = round ((fromIntegral sec + fsecs) * 1000000000000) :: Integer
+              let (!h, !m, !s) = (fromIntegral hour, fromIntegral min, unsafeCoerce pico)
+              let !tod = TimeOfDay h m s
               
               touchForeignPtr fztf
               
