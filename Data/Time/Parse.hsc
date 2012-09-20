@@ -1,4 +1,4 @@
-{-# LANGUAGE ForeignFunctionInterface, FlexibleInstances, BangPatterns #-}
+{-# LANGUAGE ForeignFunctionInterface, FlexibleInstances, BangPatterns, CPP #-}
 ------------------------------------------------------------
 -- |
 -- Copyright    :   (c) 2009,2010 Eugene Kirpichov
@@ -19,7 +19,11 @@ module Data.Time.Parse (
 import Foreign
 import Foreign.C.Types
 import Foreign.C.String
+#if __GLASGOW_HASKELL__ >= 704
 import qualified Foreign.ForeignPtr.Unsafe as PU
+#else
+import Foreign.ForeignPtr as PU
+#endif
 import Foreign.Marshal.Alloc
 import GHC.Ptr
 import qualified System.IO.Unsafe as U
