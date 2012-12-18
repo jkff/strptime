@@ -546,7 +546,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
                     if (val % 100 >= 60) return NULL;
                     val = (val / 100) * 100 + ((val % 100) * 50) / 30;
                 }
-                if (val > 1200) return NULL;
+                if ((neg && val > 1200) || (!neg && val > 1400)) return NULL;
                 off = (val * 3600) / 100;
                 if (neg) off = -off;
                 *poffset = off;
@@ -1068,7 +1068,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
                     if (val % 100 >= 60) return NULL;
                     val = (val / 100) * 100 + ((val % 100) * 50) / 30;
                 }
-                if (val > 1200) return NULL;
+                if ((neg && val > 1200) || (!neg && val > 1400)) return NULL;
                 off = (val * 3600) / 100;
                 if (neg) off = -off;
                 *poffset = off;

@@ -35,6 +35,10 @@ import qualified Data.ByteString.Char8 as S
 import qualified Data.ByteString.Internal as BI
 import qualified Data.ByteString.Lazy.Char8 as L
 import qualified Data.ByteString.Lazy.Internal as LI
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
+import qualified Data.Text.Lazy as TL
+import qualified Data.Text.Lazy.Encoding as TLE
 
 #include <time.h>
 #include "hstrptime.h"
@@ -53,6 +57,7 @@ instance Strptime [Char] where
         (t, n) <- ff s
         return (t, drop n s)
       where ff = strptime_ f
+
 instance Strptime L.ByteString where
     strptime f = \s -> do
         (t, n) <- ff s
@@ -65,6 +70,18 @@ instance Strptime S.ByteString where
         return (t, S.drop (fromIntegral n) s)
       where ff = strptime_ f
 
+instance  Strptime T.Text where
+    strptime f = \s -> do
+        (t, n) <- ff s
+        return (t, T.drop (fromIntegral n) s)
+      where ff = strptime_ f
+
+instance  Strptime TL.Text where
+    strptime f = \s -> do
+        (t, n) <- ff s
+        return (t, TL.drop (fromIntegral n) s)
+      where ff = strptime_ f
+
 class Strptime_ a where
     strptime_ :: a -> a -> Maybe (LocalTime, Int)
 
@@ -73,6 +90,12 @@ instance Strptime_ [Char] where
 
 instance Strptime_ L.ByteString where
     strptime_ f = let pf = S.concat (L.toChunks f) in \s -> strptime_ pf (S.concat . L.toChunks $ s)
+
+instance Strptime_ T.Text where
+    strptime_ f = let pf = TE.encodeUtf8 f in \s -> strptime_ pf (TE.encodeUtf8 s)
+
+instance Strptime_ TL.Text where
+    strptime_ f = let pf = TLE.encodeUtf8 f in \s -> strptime_ pf (TLE.encodeUtf8 s)
 
 instance Strptime_ S.ByteString where
     strptime_ f = U.unsafePerformIO $ do
